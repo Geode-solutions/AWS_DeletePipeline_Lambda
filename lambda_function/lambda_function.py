@@ -55,7 +55,9 @@ def lambda_handler(event: dict, context):
 
 def deleteListenerRule(elbv2_client, ruleArn):
     response = elbv2_client.delete_rule(RuleArn=ruleArn)
+    print(response, flush=True)
 
 
 def deleteTargetGroup(elbv2_client, targetGroupArn):
     response = elbv2_client.delete_target_group(TargetGroupArn=targetGroupArn)
+    print(response, flush=True)
