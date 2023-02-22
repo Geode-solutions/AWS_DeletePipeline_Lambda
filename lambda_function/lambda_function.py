@@ -8,6 +8,7 @@ def lambda_handler(event: dict, context):
     try:
         elbv2_client = boto3.client('elbv2')
         ecs_client = boto3.client('ecs')
+        print(f'{event=}', flush=True)
         taskArn = event['detail']['taskArn']  # From event
         clusterArn = event['detail']['clusterArn']  # From event
 
