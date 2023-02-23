@@ -8,8 +8,11 @@ def lambda_handler(event: dict, context):
     try:
         elbv2_client = boto3.client('elbv2')
         ecs_client = boto3.client('ecs')
+        print(f'{event=}', flush=True)
         taskArn = event['detail']['taskArn']  # From event
+        print(f'{taskArn=}', flush=True)
         clusterArn = event['detail']['clusterArn']  # From event
+        print(f'{clusterArn=}', flush=True)
 
         taskDescription = ecs_client.describe_tasks(
             cluster=clusterArn,
@@ -18,18 +21,19 @@ def lambda_handler(event: dict, context):
         )
 
         taskTags = taskDescription['tasks'][0]['tags']
+        print(f'{taskTags=}', flush=True)
 
         for taskTag in taskTags:
             key = taskTag['key']
             value = taskTag['value']
 
-            if 'RuleArn' in key:
+            if 'rule_arn' in key:
                 deleteListenerRule(elbv2_client, value)
         for taskTag in taskTags:
             key = taskTag['key']
             value = taskTag['value']
 
-            if 'TargetGroupArn' in key:
+            if 'target_group_arn' in key:
                 deleteTargetGroup(elbv2_client, value)
 
         return {
@@ -55,7 +59,9 @@ def lambda_handler(event: dict, context):
 
 def deleteListenerRule(elbv2_client, ruleArn):
     response = elbv2_client.delete_rule(RuleArn=ruleArn)
+    print(f'{response=}', flush=True)
 
 
 def deleteTargetGroup(elbv2_client, targetGroupArn):
     response = elbv2_client.delete_target_group(TargetGroupArn=targetGroupArn)
+    print(f'{response=}', flush=True)
