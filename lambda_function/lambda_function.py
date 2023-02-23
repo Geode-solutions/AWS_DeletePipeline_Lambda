@@ -10,7 +10,9 @@ def lambda_handler(event: dict, context):
         ecs_client = boto3.client('ecs')
         print(f'{event=}', flush=True)
         taskArn = event['detail']['taskArn']  # From event
+        print(f'{taskArn=}', flush=True)
         clusterArn = event['detail']['clusterArn']  # From event
+        print(f'{clusterArn=}', flush=True)
 
         taskDescription = ecs_client.describe_tasks(
             cluster=clusterArn,
