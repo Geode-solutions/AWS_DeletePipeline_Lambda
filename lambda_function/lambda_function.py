@@ -27,13 +27,13 @@ def lambda_handler(event: dict, context):
             key = taskTag['key']
             value = taskTag['value']
 
-            if 'RuleArn' in key:
+            if 'rule_arn' in key:
                 deleteListenerRule(elbv2_client, value)
         for taskTag in taskTags:
             key = taskTag['key']
             value = taskTag['value']
 
-            if 'TargetGroupArn' in key:
+            if 'target_group_arn' in key:
                 deleteTargetGroup(elbv2_client, value)
 
         return {
