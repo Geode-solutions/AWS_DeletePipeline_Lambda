@@ -21,6 +21,7 @@ def lambda_handler(event: dict, context):
         )
 
         taskTags = taskDescription['tasks'][0]['tags']
+        print(f'{taskTags=}', flush=True)
 
         for taskTag in taskTags:
             key = taskTag['key']
